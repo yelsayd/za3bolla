@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import type { Lobby, TaskMasterSession } from "@za3bool/shared";
+import type { Lobby, TaskMasterSession } from "@za3bolla/shared";
 import { createLobby, joinLobby, leaveLobby, subscribeLobby } from "./api";
 import { clearSession, loadSession, saveSession } from "./session";
 import {

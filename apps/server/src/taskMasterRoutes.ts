@@ -5,7 +5,7 @@ import {
   type AddContestantRequest,
   type RecordRoundRequest,
   type RenameContestantRequest,
-} from "@za3bool/shared";
+} from "@za3bolla/shared";
 import { TaskMasterError, taskMasterStore } from "./taskMasterStore.js";
 
 export const taskMasterRouter = Router();

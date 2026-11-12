@@ -1,4 +1,4 @@
-import type { Lobby, LobbySessionResponse } from "@za3bool/shared";
+import type { Lobby, LobbySessionResponse } from "@za3bolla/shared";
 
 async function readError(response: Response): Promise<string> {
   try {

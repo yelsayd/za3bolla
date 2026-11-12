@@ -6,7 +6,7 @@ import {
   type RoundScore,
   type TaskMasterSession,
   type TaskRound,
-} from "@za3bool/shared";
+} from "@za3bolla/shared";
 
 type SessionListener = (session: TaskMasterSession) => void;
 

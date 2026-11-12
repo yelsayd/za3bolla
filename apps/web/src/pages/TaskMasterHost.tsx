@@ -3,7 +3,7 @@ import {
   buildLeaderboard,
   type Contestant,
   type TaskMasterSession,
-} from "@za3bool/shared";
+} from "@za3bolla/shared";
 import {
   addContestant,
   recordRound,

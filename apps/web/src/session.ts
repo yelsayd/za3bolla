@@ -1,4 +1,4 @@
-const STORAGE_KEY = "za3bool.lobbySession";
+const STORAGE_KEY = "za3bolla.lobbySession";
 
 export interface LocalSession {
   code: string;

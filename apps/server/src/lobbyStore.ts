@@ -5,7 +5,7 @@ import {
   normalizeJoinCode,
   type Lobby,
   type Player,
-} from "@za3bool/shared";
+} from "@za3bolla/shared";
 
 type LobbyListener = (lobby: Lobby) => void;
 

@@ -1,5 +1,5 @@
 {
-  "name": "za3bool.land",
+  "name": "za3bolla",
   "private": true,
   "workspaces": [
     "apps/*",
@@ -7,10 +7,10 @@
   ],
   "scripts": {
     "dev": "npm run dev --workspaces --if-present",
-    "dev:server": "npm run dev -w @za3bool/server",
-    "dev:web": "npm run dev -w @za3bool/web",
-    "build": "npm run build -w @za3bool/shared && npm run build -w @za3bool/server && npm run build -w @za3bool/web",
-    "start": "npm run start -w @za3bool/server"
+    "dev:server": "npm run dev -w @za3bolla/server",
+    "dev:web": "npm run dev -w @za3bolla/web",
+    "build": "npm run build -w @za3bolla/shared && npm run build -w @za3bolla/server && npm run build -w @za3bolla/web",
+    "start": "npm run start -w @za3bolla/server"
   },
   "engines": {
     "node": ">=20"

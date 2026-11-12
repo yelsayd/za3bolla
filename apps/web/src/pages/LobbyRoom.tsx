@@ -1,4 +1,5 @@
-import type { Lobby } from "@za3bool/shared";
+import { useEffect, useState } from "react";
+import type { Lobby } from "@za3bolla/shared";
 
 interface LobbyRoomProps {
   lobby: Lobby | null;
@@ -8,6 +9,24 @@ interface LobbyRoomProps {
 }
 
 export function LobbyRoom({ lobby, playerId, error, onLeave }: LobbyRoomProps) {
+  const [copied, setCopied] = useState(false);
+
+  useEffect(() => {
+    if (!copied) return;
+    const timer = window.setTimeout(() => setCopied(false), 1500);
+    return () => window.clearTimeout(timer);
+  }, [copied]);
+
+  async function handleCopyCode() {
+    if (!lobby) return;
+    try {
+      await navigator.clipboard.writeText(lobby.code);
+      setCopied(true);
+    } catch {
+      setCopied(false);
+    }
+  }
+
   if (!lobby) {
     return (
       <section className="panel">
@@ -24,9 +43,19 @@ export function LobbyRoom({ lobby, playerId, error, onLeave }: LobbyRoomProps) {
   return (
     <section className="panel lobby-panel">
       <p className="eyebrow">Lobby code</p>
-      <h1 className="join-code" aria-live="polite">
-        {lobby.code}
-      </h1>
+      <div className="join-code-row">
+        <h1 className="join-code" aria-live="polite">
+          {lobby.code}
+        </h1>
+        <button
+          type="button"
+          className="copy-code-btn"
+          onClick={() => void handleCopyCode()}
+          aria-label={copied ? "Join code copied" : "Copy join code"}
+        >
+          {copied ? "Copied" : "Copy"}
+        </button>
+      </div>
       <p className="lede">Share this code. Players appear here as they join.</p>
 
       {error ? <p className="error">{error}</p> : null}

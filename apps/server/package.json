@@ -1,5 +1,5 @@
 {
-  "name": "@za3bool/server",
+  "name": "@za3bolla/server",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -9,7 +9,7 @@
     "start": "node dist/index.js"
   },
   "dependencies": {
-    "@za3bool/shared": "*",
+    "@za3bolla/shared": "*",
     "cors": "^2.8.5",
     "express": "^5.1.0"
   },

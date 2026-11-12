@@ -1,7 +1,7 @@
 import type {
   CreateTaskMasterResponse,
   TaskMasterSession,
-} from "@za3bool/shared";
+} from "@za3bolla/shared";
 
 async function readError(response: Response): Promise<string> {
   try {

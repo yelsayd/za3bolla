@@ -1,6 +1,6 @@
 # za3bolla
 
-Collaborative family web apps (repo may still appear as za3bool.land). First game: **TaskMaster** — host-run scoring, no contestant devices required.
+Collaborative family web apps for [za3bolla.com](https://za3bolla.com). First game: **TaskMaster** — host-run scoring, no contestant devices required.
 
 ## Layout
 
@@ -22,7 +22,7 @@ From the repo root:
 
 ```bash
 npm install
-npm run build -w @za3bool/shared
+npm run build -w @za3bolla/shared
 ```
 
 Start the API (terminal 1):
@@ -49,11 +49,10 @@ curl -s -X POST http://localhost:8787/api/taskmaster
 ## What works now
 
 1. **TaskMaster (host):** start a session, add/rename/remove contestants, record points per round, see the live leaderboard.
-2. Shared lobby create/join (short code + SSE roster) remains available under “Open a shared lobby” for future device-based games.
+2. Shared lobby create/join (short code + SSE roster) remains available under “Open a shared lobby” for future device-based games. Lobby codes can be copied from the lobby room.
 
 ## Intentionally deferred
 
 - Contestant phone join for TaskMaster
 - Task content library (free-text / “Round N” titles only)
 - Persistent storage / auth / Supabase
-- Full package rename away from `@za3bool/*`

@@ -5,7 +5,7 @@ import {
   type CreateLobbyRequest,
   type JoinLobbyRequest,
   type LeaveLobbyRequest,
-} from "@za3bool/shared";
+} from "@za3bolla/shared";
 import { LobbyError, lobbyStore } from "./lobbyStore.js";
 
 export const lobbyRouter = Router();
