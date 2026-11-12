@@ -6,13 +6,16 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -p tsconfig.json && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "start": "serve -s dist --listen tcp://0.0.0.0:${PORT:-3000}"
   },
   "dependencies": {
     "@za3bolla/shared": "*",
     "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "react-dom": "^19.2.0",
+    "serve": "^14.2.4"
   },
+
   "devDependencies": {
     "@types/react": "^19.2.2",
     "@types/react-dom": "^19.2.2",

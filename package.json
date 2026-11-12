@@ -10,8 +10,13 @@
     "dev:server": "npm run dev -w @za3bolla/server",
     "dev:web": "npm run dev -w @za3bolla/web",
     "build": "npm run build -w @za3bolla/shared && npm run build -w @za3bolla/server && npm run build -w @za3bolla/web",
-    "start": "npm run start -w @za3bolla/server"
+    "build:server": "npm run build -w @za3bolla/shared && npm run build -w @za3bolla/server",
+    "build:web": "npm run build -w @za3bolla/shared && npm run build -w @za3bolla/web",
+    "start": "npm run start -w @za3bolla/server",
+    "start:server": "npm run start -w @za3bolla/server",
+    "start:web": "npm run start -w @za3bolla/web"
   },
+
   "engines": {
     "node": ">=20"
   },

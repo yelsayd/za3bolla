@@ -1,0 +1,10 @@
+# Railway service: @za3bolla/server
+# Dashboard: Root Directory = empty (repo root), Config File = railway.server.toml
+[build]
+builder = "DOCKERFILE"
+dockerfilePath = "Dockerfile.server"
+
+[deploy]
+startCommand = "npm run start -w @za3bolla/server"
+healthcheckPath = "/api/health"
+restartPolicyType = "ON_FAILURE"

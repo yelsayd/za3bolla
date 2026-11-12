@@ -1,4 +1,5 @@
 import type { Lobby, LobbySessionResponse } from "@za3bolla/shared";
+import { apiUrl } from "./config";
 
 async function readError(response: Response): Promise<string> {
   try {
@@ -10,7 +11,7 @@ async function readError(response: Response): Promise<string> {
 }
 
 export async function createLobby(displayName: string): Promise<LobbySessionResponse> {
-  const response = await fetch("/api/lobbies", {
+  const response = await fetch(apiUrl("/api/lobbies"), {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ displayName }),
@@ -23,7 +24,7 @@ export async function joinLobby(
   code: string,
   displayName: string,
 ): Promise<LobbySessionResponse> {
-  const response = await fetch(`/api/lobbies/${encodeURIComponent(code)}/join`, {
+  const response = await fetch(apiUrl(`/api/lobbies/${encodeURIComponent(code)}/join`), {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ displayName }),
@@ -34,7 +35,7 @@ export async function joinLobby(
 
 /** Remove this player from the lobby. Uses keepalive so tab close still delivers. */
 export function leaveLobby(code: string, playerId: string): Promise<void> {
-  return fetch(`/api/lobbies/${encodeURIComponent(code)}/leave`, {
+  return fetch(apiUrl(`/api/lobbies/${encodeURIComponent(code)}/leave`), {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ playerId }),
@@ -49,7 +50,7 @@ export function subscribeLobby(
   onLobby: (lobby: Lobby) => void,
   onError: (message: string) => void,
 ): () => void {
-  const source = new EventSource(`/api/lobbies/${encodeURIComponent(code)}/events`);
+  const source = new EventSource(apiUrl(`/api/lobbies/${encodeURIComponent(code)}/events`));
 
   source.onmessage = (event) => {
     try {

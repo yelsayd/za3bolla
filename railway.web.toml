@@ -1,0 +1,9 @@
+# Railway service: @za3bolla/web
+# Dashboard: Root Directory = empty (repo root), Config File = railway.web.toml
+# Variables: VITE_API_URL=https://<server-public-domain> (no trailing slash)
+[build]
+builder = "DOCKERFILE"
+dockerfilePath = "Dockerfile.web"
+
+[deploy]
+restartPolicyType = "ON_FAILURE"

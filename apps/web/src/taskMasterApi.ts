@@ -2,6 +2,7 @@ import type {
   CreateTaskMasterResponse,
   TaskMasterSession,
 } from "@za3bolla/shared";
+import { apiUrl } from "./config";
 
 async function readError(response: Response): Promise<string> {
   try {
@@ -20,7 +21,7 @@ function hostHeaders(hostToken: string): HeadersInit {
 }
 
 export async function createTaskMasterSession(): Promise<CreateTaskMasterResponse> {
-  const response = await fetch("/api/taskmaster", { method: "POST" });
+  const response = await fetch(apiUrl("/api/taskmaster"), { method: "POST" });
   if (!response.ok) throw new Error(await readError(response));
   return response.json() as Promise<CreateTaskMasterResponse>;
 }
@@ -28,7 +29,7 @@ export async function createTaskMasterSession(): Promise<CreateTaskMasterRespons
 export async function fetchTaskMasterSession(
   sessionId: string,
 ): Promise<TaskMasterSession> {
-  const response = await fetch(`/api/taskmaster/${encodeURIComponent(sessionId)}`);
+  const response = await fetch(apiUrl(`/api/taskmaster/${encodeURIComponent(sessionId)}`));
   if (!response.ok) throw new Error(await readError(response));
   const data = (await response.json()) as { session: TaskMasterSession };
   return data.session;
@@ -40,7 +41,7 @@ export async function addContestant(
   name: string,
 ): Promise<TaskMasterSession> {
   const response = await fetch(
-    `/api/taskmaster/${encodeURIComponent(sessionId)}/contestants`,
+    apiUrl(`/api/taskmaster/${encodeURIComponent(sessionId)}/contestants`),
     {
       method: "POST",
       headers: hostHeaders(hostToken),
@@ -59,7 +60,9 @@ export async function renameContestant(
   name: string,
 ): Promise<TaskMasterSession> {
   const response = await fetch(
-    `/api/taskmaster/${encodeURIComponent(sessionId)}/contestants/${encodeURIComponent(contestantId)}`,
+    apiUrl(
+      `/api/taskmaster/${encodeURIComponent(sessionId)}/contestants/${encodeURIComponent(contestantId)}`,
+    ),
     {
       method: "PATCH",
       headers: hostHeaders(hostToken),
@@ -77,7 +80,9 @@ export async function removeContestant(
   contestantId: string,
 ): Promise<TaskMasterSession> {
   const response = await fetch(
-    `/api/taskmaster/${encodeURIComponent(sessionId)}/contestants/${encodeURIComponent(contestantId)}`,
+    apiUrl(
+      `/api/taskmaster/${encodeURIComponent(sessionId)}/contestants/${encodeURIComponent(contestantId)}`,
+    ),
     {
       method: "DELETE",
       headers: hostHeaders(hostToken),
@@ -95,7 +100,7 @@ export async function recordRound(
   scores: { contestantId: string; points: number }[],
 ): Promise<TaskMasterSession> {
   const response = await fetch(
-    `/api/taskmaster/${encodeURIComponent(sessionId)}/rounds`,
+    apiUrl(`/api/taskmaster/${encodeURIComponent(sessionId)}/rounds`),
     {
       method: "POST",
       headers: hostHeaders(hostToken),
@@ -111,7 +116,7 @@ export async function endTaskMasterSession(
   sessionId: string,
   hostToken: string,
 ): Promise<void> {
-  const response = await fetch(`/api/taskmaster/${encodeURIComponent(sessionId)}`, {
+  const response = await fetch(apiUrl(`/api/taskmaster/${encodeURIComponent(sessionId)}`), {
     method: "DELETE",
     headers: hostHeaders(hostToken),
     keepalive: true,
@@ -127,7 +132,7 @@ export function subscribeTaskMaster(
   onError: (message: string) => void,
 ): () => void {
   const source = new EventSource(
-    `/api/taskmaster/${encodeURIComponent(sessionId)}/events`,
+    apiUrl(`/api/taskmaster/${encodeURIComponent(sessionId)}/events`),
   );
 
   source.onmessage = (event) => {

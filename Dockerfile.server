@@ -1,0 +1,34 @@
+# Build context: monorepo root (required for npm workspaces).
+FROM node:20-bookworm-slim AS build
+WORKDIR /app
+
+COPY package.json package-lock.json ./
+COPY apps/server/package.json apps/server/
+COPY apps/web/package.json apps/web/
+COPY packages/shared/package.json packages/shared/
+
+RUN npm ci
+
+COPY packages/shared packages/shared
+COPY apps/server apps/server
+
+RUN npm run build -w @za3bolla/shared && npm run build -w @za3bolla/server
+
+FROM node:20-bookworm-slim AS runner
+WORKDIR /app
+ENV NODE_ENV=production
+
+COPY package.json package-lock.json ./
+COPY apps/server/package.json apps/server/
+COPY apps/web/package.json apps/web/
+COPY packages/shared/package.json packages/shared/
+
+RUN npm ci --omit=dev
+
+COPY --from=build /app/packages/shared/dist packages/shared/dist
+COPY --from=build /app/apps/server/dist apps/server/dist
+
+ENV PORT=8787
+EXPOSE 8787
+
+CMD ["npm", "run", "start", "-w", "@za3bolla/server"]
