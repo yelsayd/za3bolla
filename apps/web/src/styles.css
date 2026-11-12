@@ -234,6 +234,171 @@ input:focus {
   font-size: 0.88rem;
 }
 
+.home-stack,
+.host-layout {
+  width: min(100%, 34rem);
+  display: grid;
+  gap: 0.9rem;
+}
+
+.home-stack .panel,
+.host-layout .panel {
+  width: 100%;
+}
+
+.host-layout {
+  width: min(100%, 40rem);
+}
+
+h2 {
+  margin: 0 0 0.75rem;
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  letter-spacing: -0.02em;
+}
+
+h3 {
+  margin: 0 0 0.5rem;
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.game-blurb,
+.section-note,
+.empty-hint {
+  margin: 0.75rem 0 0;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+.lede.tight {
+  margin-bottom: 0.9rem;
+}
+
+.lobby-entry {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.lobby-toggle {
+  width: 100%;
+  text-align: left;
+  font-size: 1rem;
+}
+
+.inline-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  align-items: end;
+}
+
+.inline-form .grow {
+  flex: 1 1 10rem;
+}
+
+.compact {
+  margin-top: 0;
+  width: auto;
+  padding: 0.85rem 1rem;
+}
+
+.ghost.compact {
+  margin-top: 0;
+}
+
+.contestant-list,
+.leaderboard,
+.round-history ul {
+  list-style: none;
+  margin: 1rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0.45rem;
+}
+
+.contestant-list li,
+.leaderboard li {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  align-items: center;
+  padding: 0.75rem 0.15rem;
+  border-bottom: 1px solid var(--line);
+  animation: rise 280ms ease-out;
+}
+
+.row-actions {
+  display: flex;
+  gap: 0.55rem;
+  flex-shrink: 0;
+}
+
+.text-btn {
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0.2rem;
+}
+
+.text-btn:hover {
+  color: var(--ink);
+}
+
+.text-btn.danger {
+  color: var(--error);
+}
+
+.points-row {
+  display: grid;
+  grid-template-columns: 1fr 6.5rem;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.points-row input {
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.leaderboard .rank {
+  width: 1.5rem;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.leaderboard .player-name {
+  flex: 1;
+}
+
+.leaderboard .points {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--accent);
+}
+
+.round-history {
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+}
+
+.round-history li {
+  display: grid;
+  gap: 0.2rem;
+  padding: 0.55rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.end-session {
+  width: 100%;
+}
+
 @media (min-width: 720px) {
   .app-shell {
     padding: 2rem;

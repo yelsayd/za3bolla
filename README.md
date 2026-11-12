@@ -1,15 +1,15 @@
-# za3bool.land
+# za3bolla
 
-Collaborative family web apps platform. v1 is **create + join lobby** only (no gameplay yet).
+Collaborative family web apps (repo may still appear as za3bool.land). First game: **TaskMaster** — host-run scoring, no contestant devices required.
 
 ## Layout
 
 ```
 apps/
-  server/     Node + Express API and SSE lobby updates
+  server/     Node + Express API, SSE lobbies, TaskMaster sessions
   web/        React (Vite) client
 packages/
-  shared/     Reusable lobby/session types and helpers
+  shared/     Lobby + TaskMaster types and helpers
 ```
 
 ## Prerequisites
@@ -43,21 +43,17 @@ Open [http://localhost:5173](http://localhost:5173). The Vite dev server proxies
 
 ```bash
 curl -s http://localhost:8787/api/health
-curl -s -X POST http://localhost:8787/api/lobbies \
-  -H 'content-type: application/json' \
-  -d '{"displayName":"Host"}'
+curl -s -X POST http://localhost:8787/api/taskmaster
 ```
 
-## What works in v1
+## What works now
 
-1. Create a lobby and receive a 4-character join code.
-2. Join that lobby with the code and a display name.
-3. See the player list update live (Server-Sent Events) as people join.
-4. Shared lobby concepts live in `@za3bool/shared` for future games.
+1. **TaskMaster (host):** start a session, add/rename/remove contestants, record points per round, see the live leaderboard.
+2. Shared lobby create/join (short code + SSE roster) remains available under “Open a shared lobby” for future device-based games.
 
 ## Intentionally deferred
 
-- TaskMaster tasks, scoring, and moderation
-- Persistent storage / auth
-- TV/host second-screen mode
-- Closing or starting a game from the lobby
+- Contestant phone join for TaskMaster
+- Task content library (free-text / “Round N” titles only)
+- Persistent storage / auth / Supabase
+- Full package rename away from `@za3bool/*`

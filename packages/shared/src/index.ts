@@ -16,3 +16,20 @@ export {
   type LobbyStatus,
   type Player,
 } from "./lobby.js";
+
+export {
+  buildLeaderboard,
+  normalizeContestantName,
+  normalizeRoundTitle,
+  validateContestantName,
+  validateRoundTitle,
+  type AddContestantRequest,
+  type Contestant,
+  type CreateTaskMasterResponse,
+  type LeaderboardEntry,
+  type RecordRoundRequest,
+  type RenameContestantRequest,
+  type RoundScore,
+  type TaskMasterSession,
+  type TaskRound,
+} from "./taskmaster.js";
