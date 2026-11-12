@@ -25,6 +25,10 @@ export interface JoinLobbyRequest {
   displayName: string;
 }
 
+export interface LeaveLobbyRequest {
+  playerId: string;
+}
+
 export interface LobbySessionResponse {
   lobby: Lobby;
   playerId: string;

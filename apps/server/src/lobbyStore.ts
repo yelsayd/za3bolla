@@ -77,6 +77,32 @@ export class LobbyStore {
     return publicLobby(this.require(codeRaw));
   }
 
+  leave(codeRaw: string, playerId: string): Lobby | null {
+    const code = normalizeJoinCode(codeRaw);
+    const lobby = this.byCode.get(code);
+    if (!lobby) {
+      return null;
+    }
+
+    const index = lobby.players.findIndex((player) => player.id === playerId);
+    if (index === -1) {
+      return publicLobby(lobby);
+    }
+
+    const [removed] = lobby.players.splice(index, 1);
+    if (lobby.players.length === 0) {
+      this.byCode.delete(code);
+      return null;
+    }
+
+    if (removed?.isHost) {
+      lobby.players[0]!.isHost = true;
+    }
+
+    this.emit(lobby);
+    return publicLobby(lobby);
+  }
+
   subscribe(codeRaw: string, listener: LobbyListener): () => void {
     const lobby = this.require(codeRaw);
     lobby.listeners.add(listener);

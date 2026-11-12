@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { Lobby } from "@za3bool/shared";
-import { createLobby, joinLobby, subscribeLobby } from "./api";
+import { createLobby, joinLobby, leaveLobby, subscribeLobby } from "./api";
 import { clearSession, loadSession, saveSession } from "./session";
 import { Home } from "./pages/Home";
 import { LobbyRoom } from "./pages/LobbyRoom";
@@ -14,6 +14,8 @@ export function App() {
   const [lobby, setLobby] = useState<Lobby | null>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const screenRef = useRef(screen);
+  screenRef.current = screen;
 
   useEffect(() => {
     const existing = loadSession();
@@ -40,6 +42,18 @@ export function App() {
 
     return unsubscribe;
   }, [screen]);
+
+  useEffect(() => {
+    function notifyLeaveOnUnload() {
+      const current = screenRef.current;
+      if (current.name !== "lobby") return;
+      void leaveLobby(current.code, current.playerId);
+      clearSession();
+    }
+
+    window.addEventListener("pagehide", notifyLeaveOnUnload);
+    return () => window.removeEventListener("pagehide", notifyLeaveOnUnload);
+  }, []);
 
   async function handleCreate(displayName: string) {
     setBusy(true);
@@ -88,6 +102,10 @@ export function App() {
   }
 
   function handleLeave() {
+    const current = screenRef.current;
+    if (current.name === "lobby") {
+      void leaveLobby(current.code, current.playerId);
+    }
     clearSession();
     setLobby(null);
     setError(null);

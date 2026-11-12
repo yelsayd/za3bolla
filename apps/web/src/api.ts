@@ -32,6 +32,18 @@ export async function joinLobby(
   return response.json() as Promise<LobbySessionResponse>;
 }
 
+/** Remove this player from the lobby. Uses keepalive so tab close still delivers. */
+export function leaveLobby(code: string, playerId: string): Promise<void> {
+  return fetch(`/api/lobbies/${encodeURIComponent(code)}/leave`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ playerId }),
+    keepalive: true,
+  }).then(async (response) => {
+    if (!response.ok) throw new Error(await readError(response));
+  });
+}
+
 export function subscribeLobby(
   code: string,
   onLobby: (lobby: Lobby) => void,

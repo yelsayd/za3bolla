@@ -9,6 +9,7 @@ export {
   validateDisplayName,
   type CreateLobbyRequest,
   type JoinLobbyRequest,
+  type LeaveLobbyRequest,
   type Lobby,
   type LobbyEvent,
   type LobbySessionResponse,

@@ -4,6 +4,7 @@ import {
   validateDisplayName,
   type CreateLobbyRequest,
   type JoinLobbyRequest,
+  type LeaveLobbyRequest,
 } from "@za3bool/shared";
 import { LobbyError, lobbyStore } from "./lobbyStore.js";
 
@@ -47,6 +48,28 @@ lobbyRouter.post("/:code/join", (req: Request, res: Response) => {
 
     const session = lobbyStore.join(code, body.displayName);
     res.status(200).json(session);
+  } catch (error) {
+    sendError(res, error);
+  }
+});
+
+lobbyRouter.post("/:code/leave", (req: Request, res: Response) => {
+  try {
+    const code = paramValue(req.params.code);
+    if (!isValidJoinCode(code)) {
+      res.status(400).json({ error: "Join code must be 4 characters." });
+      return;
+    }
+
+    const body = req.body as LeaveLobbyRequest;
+    const playerId = typeof body?.playerId === "string" ? body.playerId.trim() : "";
+    if (!playerId) {
+      res.status(400).json({ error: "playerId is required." });
+      return;
+    }
+
+    const lobby = lobbyStore.leave(code, playerId);
+    res.status(200).json({ lobby });
   } catch (error) {
     sendError(res, error);
   }
