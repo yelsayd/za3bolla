@@ -1,0 +1,245 @@
+:root {
+  color-scheme: light;
+  --bg-deep: #1c3a33;
+  --bg-mid: #2f6b58;
+  --bg-soft: #d8efe4;
+  --ink: #13261f;
+  --muted: #3d5a4f;
+  --paper: rgba(247, 252, 249, 0.92);
+  --line: rgba(19, 38, 31, 0.14);
+  --accent: #e4572e;
+  --accent-ink: #fff8f4;
+  --error: #9b1d1d;
+  --shadow: 0 18px 50px rgba(14, 36, 28, 0.22);
+  --radius: 18px;
+  --font-display: "Fraunces", Georgia, serif;
+  --font-body: "Manrope", "Segoe UI", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 12% 18%, rgba(255, 214, 170, 0.35), transparent 42%),
+    radial-gradient(circle at 88% 8%, rgba(92, 196, 155, 0.28), transparent 36%),
+    linear-gradient(160deg, var(--bg-soft), #b7d7c8 45%, var(--bg-mid));
+}
+
+button,
+input {
+  font: inherit;
+}
+
+.app-shell {
+  min-height: 100vh;
+  padding: 1.25rem 1rem 2rem;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 1rem;
+}
+
+.topbar {
+  max-width: 34rem;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.brand {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 5vw, 2.1rem);
+  letter-spacing: -0.03em;
+  color: var(--bg-deep);
+}
+
+.stage {
+  display: grid;
+  place-items: start center;
+}
+
+.panel {
+  width: min(100%, 34rem);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1.4rem 1.25rem 1.5rem;
+  animation: rise 360ms ease-out;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+h1 {
+  margin: 0.15rem 0 0.55rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 6vw, 2.4rem);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+
+.lede {
+  margin: 0 0 1.2rem;
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+.eyebrow {
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.join-code {
+  font-size: clamp(2.6rem, 12vw, 3.6rem);
+  letter-spacing: 0.18em;
+  text-indent: 0.18em;
+}
+
+.mode-toggle {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.4rem;
+  margin-bottom: 1rem;
+  padding: 0.3rem;
+  border-radius: 999px;
+  background: rgba(28, 58, 51, 0.08);
+}
+
+.mode-toggle button {
+  border: 0;
+  border-radius: 999px;
+  padding: 0.7rem 0.8rem;
+  background: transparent;
+  color: var(--muted);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.mode-toggle button.active {
+  background: white;
+  color: var(--ink);
+  box-shadow: 0 1px 0 rgba(19, 38, 31, 0.08);
+}
+
+.stack-form {
+  display: grid;
+  gap: 0.85rem;
+}
+
+label {
+  display: grid;
+  gap: 0.35rem;
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+input {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 0.85rem 0.95rem;
+  background: #fff;
+  color: var(--ink);
+}
+
+input:focus {
+  outline: 2px solid rgba(228, 87, 46, 0.35);
+  border-color: var(--accent);
+}
+
+.primary,
+.ghost {
+  border-radius: 12px;
+  padding: 0.9rem 1rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.primary {
+  border: 0;
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+.primary:disabled {
+  opacity: 0.65;
+  cursor: wait;
+}
+
+.ghost {
+  margin-top: 1rem;
+  width: 100%;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink);
+}
+
+.error {
+  margin: 0;
+  color: var(--error);
+  font-weight: 600;
+}
+
+.player-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.55rem;
+}
+
+.player-list li {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  align-items: baseline;
+  padding: 0.8rem 0.2rem;
+  border-bottom: 1px solid var(--line);
+  animation: rise 280ms ease-out;
+}
+
+.player-list li.you .player-name {
+  color: var(--accent);
+}
+
+.player-name {
+  font-weight: 700;
+}
+
+.player-meta {
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+@media (min-width: 720px) {
+  .app-shell {
+    padding: 2rem;
+  }
+
+  .panel {
+    padding: 1.75rem 1.6rem 1.8rem;
+  }
+}

@@ -1,0 +1,66 @@
+import type { Lobby, LobbySessionResponse } from "@za3bool/shared";
+
+async function readError(response: Response): Promise<string> {
+  try {
+    const data = (await response.json()) as { error?: string };
+    return data.error ?? `Request failed (${response.status})`;
+  } catch {
+    return `Request failed (${response.status})`;
+  }
+}
+
+export async function createLobby(displayName: string): Promise<LobbySessionResponse> {
+  const response = await fetch("/api/lobbies", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ displayName }),
+  });
+  if (!response.ok) throw new Error(await readError(response));
+  return response.json() as Promise<LobbySessionResponse>;
+}
+
+export async function joinLobby(
+  code: string,
+  displayName: string,
+): Promise<LobbySessionResponse> {
+  const response = await fetch(`/api/lobbies/${encodeURIComponent(code)}/join`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ displayName }),
+  });
+  if (!response.ok) throw new Error(await readError(response));
+  return response.json() as Promise<LobbySessionResponse>;
+}
+
+export function subscribeLobby(
+  code: string,
+  onLobby: (lobby: Lobby) => void,
+  onError: (message: string) => void,
+): () => void {
+  const source = new EventSource(`/api/lobbies/${encodeURIComponent(code)}/events`);
+
+  source.onmessage = (event) => {
+    try {
+      const payload = JSON.parse(event.data) as {
+        type: string;
+        lobby?: Lobby;
+        message?: string;
+      };
+      if (payload.type === "lobby" && payload.lobby) {
+        onLobby(payload.lobby);
+        return;
+      }
+      if (payload.type === "error") {
+        onError(payload.message ?? "Lobby stream error.");
+      }
+    } catch {
+      onError("Could not parse lobby update.");
+    }
+  };
+
+  source.onerror = () => {
+    // Browser will retry EventSource automatically.
+  };
+
+  return () => source.close();
+}

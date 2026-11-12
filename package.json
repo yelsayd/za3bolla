@@ -1,0 +1,21 @@
+{
+  "name": "za3bool.land",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspaces --if-present",
+    "dev:server": "npm run dev -w @za3bool/server",
+    "dev:web": "npm run dev -w @za3bool/web",
+    "build": "npm run build -w @za3bool/shared && npm run build -w @za3bool/server && npm run build -w @za3bool/web",
+    "start": "npm run start -w @za3bool/server"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "allowScripts": {
+    "esbuild@0.28.2": true
+  }
+}
