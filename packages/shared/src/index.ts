@@ -33,3 +33,9 @@ export {
   type TaskMasterSession,
   type TaskRound,
 } from "./taskmaster.js";
+
+export {
+  getTaskById,
+  TASK_BANK,
+  type TaskDefinition,
+} from "./tasks.js";

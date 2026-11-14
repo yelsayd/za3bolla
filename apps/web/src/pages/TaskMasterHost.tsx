@@ -1,7 +1,9 @@
 import { useEffect, useMemo, useState, type FormEvent } from "react";
 import {
   buildLeaderboard,
+  TASK_BANK,
   type Contestant,
+  type TaskDefinition,
   type TaskMasterSession,
 } from "@za3bolla/shared";
 import {
@@ -38,6 +40,8 @@ export function TaskMasterHost({
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editName, setEditName] = useState("");
   const [roundTitle, setRoundTitle] = useState("");
+  const [selectedTask, setSelectedTask] = useState<TaskDefinition | null>(null);
+  const [showTaskBank, setShowTaskBank] = useState(false);
   const [pointsById, setPointsById] = useState<Record<string, string>>({});
 
   const leaderboard = useMemo(
@@ -46,6 +50,17 @@ export function TaskMasterHost({
   );
 
   const nextRoundLabel = session ? `Round ${session.rounds.length + 1}` : "Round 1";
+
+  function pickTask(task: TaskDefinition) {
+    setSelectedTask(task);
+    setRoundTitle(task.title);
+    setShowTaskBank(false);
+  }
+
+  function clearPickedTask() {
+    setSelectedTask(null);
+    setRoundTitle("");
+  }
 
   useEffect(() => {
     if (!session) return;
@@ -105,6 +120,8 @@ export function TaskMasterHost({
       recordRound(sessionId, hostToken, roundTitle || nextRoundLabel, scores),
     );
     setRoundTitle("");
+    setSelectedTask(null);
+    setShowTaskBank(false);
     setPointsById((prev) => {
       const reset: Record<string, string> = {};
       for (const id of Object.keys(prev)) reset[id] = "0";
@@ -229,8 +246,66 @@ export function TaskMasterHost({
       <section className="panel">
         <h2>Score a round</h2>
         <p className="section-note">
-          Tell contestants the task out loud, then record points when they finish.
+          Pick a task from the bank or type your own title, announce it out loud, then
+          record points when they finish.
         </p>
+
+        <div className="task-bank-controls">
+          <button
+            type="button"
+            className="ghost compact"
+            disabled={busy || session.contestants.length === 0}
+            onClick={() => setShowTaskBank((open) => !open)}
+            aria-expanded={showTaskBank}
+          >
+            {showTaskBank ? "Hide task bank" : "Task bank"}
+          </button>
+          {selectedTask ? (
+            <button
+              type="button"
+              className="text-btn"
+              disabled={busy}
+              onClick={clearPickedTask}
+            >
+              Clear pick
+            </button>
+          ) : null}
+        </div>
+
+        {showTaskBank ? (
+          <ul className="task-bank-list">
+            {TASK_BANK.map((task) => {
+              const isActive = selectedTask?.id === task.id;
+              return (
+                <li key={task.id}>
+                  <button
+                    type="button"
+                    className={isActive ? "task-pick active" : "task-pick"}
+                    disabled={busy}
+                    onClick={() => pickTask(task)}
+                  >
+                    <span className="task-pick-title">{task.title}</span>
+                    {task.scoring ? (
+                      <span className="task-pick-scoring">{task.scoring}</span>
+                    ) : null}
+                    <span className="task-pick-brief">{task.brief}</span>
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
+        ) : null}
+
+        {selectedTask ? (
+          <div className="task-brief-card">
+            <h3>Read aloud</h3>
+            <p className="task-brief-text">{selectedTask.brief}</p>
+            {selectedTask.scoring ? (
+              <p className="task-scoring-hint">{selectedTask.scoring}</p>
+            ) : null}
+          </div>
+        ) : null}
+
         <form className="stack-form" onSubmit={handleRecordRound}>
           <label>
             Round title
@@ -238,7 +313,15 @@ export function TaskMasterHost({
               value={roundTitle}
               maxLength={80}
               placeholder={nextRoundLabel}
-              onChange={(event) => setRoundTitle(event.target.value)}
+              onChange={(event) => {
+                setRoundTitle(event.target.value);
+                if (
+                  selectedTask &&
+                  event.target.value.trim() !== selectedTask.title
+                ) {
+                  setSelectedTask(null);
+                }
+              }}
               disabled={busy || session.contestants.length === 0}
             />
           </label>

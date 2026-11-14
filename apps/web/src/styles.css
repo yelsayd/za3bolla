@@ -424,6 +424,82 @@ h3 {
   width: 100%;
 }
 
+.task-bank-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0.85rem 0 0.5rem;
+}
+
+.task-bank-list {
+  list-style: none;
+  margin: 0.35rem 0 1rem;
+  padding: 0;
+  display: grid;
+  gap: 0.45rem;
+  max-height: 18rem;
+  overflow: auto;
+}
+
+.task-pick {
+  width: 100%;
+  text-align: left;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 0.75rem 0.85rem;
+  background: rgba(255, 255, 255, 0.72);
+  color: var(--ink);
+  cursor: pointer;
+  display: grid;
+  gap: 0.2rem;
+}
+
+.task-pick:hover {
+  border-color: var(--accent);
+}
+
+.task-pick.active {
+  border-color: var(--accent);
+  background: rgba(228, 87, 46, 0.08);
+}
+
+.task-pick-title {
+  font-weight: 700;
+}
+
+.task-pick-scoring {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.task-pick-brief {
+  font-size: 0.88rem;
+  color: var(--muted);
+  line-height: 1.35;
+}
+
+.task-brief-card {
+  margin: 0.5rem 0 1rem;
+  padding: 0.9rem 1rem;
+  border-radius: 12px;
+  border: 1px dashed var(--line);
+  background: rgba(255, 255, 255, 0.55);
+}
+
+.task-brief-text {
+  margin: 0;
+  line-height: 1.45;
+}
+
+.task-scoring-hint {
+  margin: 0.55rem 0 0;
+  font-weight: 700;
+  color: var(--accent);
+  font-size: 0.92rem;
+}
+
 @media (min-width: 720px) {
   .app-shell {
     padding: 2rem;

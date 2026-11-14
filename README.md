@@ -48,13 +48,16 @@ curl -s -X POST http://localhost:8787/api/taskmaster
 
 ## What works now
 
-1. **TaskMaster (host):** start a session, add/rename/remove contestants, record points per round, see the live leaderboard.
+1. **TaskMaster (host):** start a session, add/rename/remove contestants, pick a task from the built-in family task bank (or type a free-text round title), record points per round, see the live leaderboard.
 2. Shared lobby create/join (short code + SSE roster) remains available under “Open a shared lobby” for future device-based games. Lobby codes can be copied from the lobby room.
+
+### TaskMaster task bank
+
+`@za3bolla/shared` ships a curated bank of original, family-friendly TaskMaster-style briefs (living-room / kitchen / backyard props). On the host console, open **Task bank**, pick a task to fill the round title and show the brief to read aloud, then score as usual. Free-text round titles still work if you prefer your own tasks.
 
 ## Intentionally deferred
 
 - Contestant phone join for TaskMaster
-- Task content library (free-text / “Round N” titles only)
 - Persistent storage / auth / Supabase
 
 ## Deploy on Railway (two services)
